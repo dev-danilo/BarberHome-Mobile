@@ -1,6 +1,6 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
-  Image, View, KeyboardAvoidingView, Platform, ScrollView,
+  Image, View, KeyboardAvoidingView, Platform, ScrollView, TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
@@ -21,6 +21,9 @@ const SignUp: React.FC = () => {
 
   const navigation = useNavigation();
 
+  const emailInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -35,9 +38,44 @@ const SignUp: React.FC = () => {
               <Title>Faça seu cadastro</Title>
             </View>
             <Form ref={formRef} onSubmit={(data) => { console.log(data); }}>
-              <Input name="name" icon="user" placeholder="Nome" />
-              <Input name="email" icon="mail" placeholder="E-mail" />
-              <Input name="password" icon="lock" placeholder="Senha" secureTextEntry />
+              <Input
+                autoCapitalize="words"
+                /** primeira letra maiuscula apenas das palavras  */
+                name="name"
+                icon="user"
+                placeholder="Nome"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  emailInputRef.current?.focus();
+                }}
+              />
+              <Input
+                ref={emailInputRef}
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
+                name="email"
+                icon="mail"
+                placeholder="E-mail"
+
+                keyboardType="email-address"
+                autoCorrect={false}
+                autoCapitalize="none"
+                returnKeyType="next"
+              />
+              <Input
+                ref={passwordInputRef}
+                name="password"
+                icon="lock"
+                placeholder="Senha"
+                textContentType="newPassword"
+                /** oneTimeCode preenchimento do campo com recebimento de sms */
+                secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={() => {
+                  formRef.current?.submitForm();
+                }}
+              />
               <Button onPress={() => {
                 formRef.current?.submitForm();
               }}
