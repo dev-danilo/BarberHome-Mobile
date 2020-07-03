@@ -5,8 +5,12 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
+
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+
+import api from '../../services/api';
+
 import getValidationsErrors from '../../utils/getValidationErrors';
 import logoImg from '../../assets/logo.png';
 import Input from '../../components/Input';
@@ -44,13 +48,14 @@ const SignUp: React.FC = () => {
         abortEarly: false, // mostra todos os erros de uma vez
       });
 
-      // await api.post('/users', data);
-      // history.push('/');
+      await api.post('/users', data);
 
       Alert.alert(
-        'Cadastro realizado!',
-        'Você já pode fazer seu logon no GoBarber! 😃',
+        'Cadastro realizado com sucesso.',
+        'Você já pode fazer seu login no GoBarber! 🚀😆',
       );
+
+      navigation.goBack();
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationsErrors(err);
