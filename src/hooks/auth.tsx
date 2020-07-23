@@ -1,5 +1,9 @@
 import React, {
-  createContext, useCallback, useState, useContext, useEffect,
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
 } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
@@ -11,7 +15,7 @@ interface User {
   avatar_url: string;
 }
 
-interface AuthState{
+interface AuthState {
   token: string;
   user: User;
 }
@@ -21,16 +25,14 @@ interface SignInCredentials {
   password: string;
 }
 
-interface AuthContextData{
+interface AuthContextData {
   user: User;
-  loading:boolean;
-  signIn(credentials:SignInCredentials): Promise<void>;
+  loading: boolean;
+  signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
 
-const AuthContext = createContext<AuthContextData>(
-  {} as AuthContextData,
-);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
@@ -53,13 +55,16 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post<{token: string, user:object}>('sessions', {
-      email,
-      password,
-    });
+    const response = await api.post<{ token: string; user: object }>(
+      'sessions',
+      {
+        email,
+        password,
+      },
+    );
 
     const { token, user } = response.data;
-
+    // console.log(response.data);
     await AsyncStorage.multiSet([
       ['@Gobarber:token', token],
       ['@Gobarber:user', JSON.stringify(user)],
@@ -69,23 +74,22 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove([
-      '@Gobarber:token',
-      '@Gobarber:user',
-    ]);
+    await AsyncStorage.multiRemove(['@Gobarber:token', '@Gobarber:user']);
 
-    setData({}as AuthState); // deslogando usuario
+    setData({} as AuthState); // deslogando usuario
   }, []);
 
   return (
-
-    <AuthContext.Provider value={{
-      user: data.user, loading, signIn, signOut,
-    }}
+    <AuthContext.Provider
+      value={{
+        user: data.user,
+        loading,
+        signIn,
+        signOut,
+      }}
     >
       {children}
     </AuthContext.Provider>
-
   );
 };
 

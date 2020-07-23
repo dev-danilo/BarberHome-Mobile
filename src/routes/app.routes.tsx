@@ -16,7 +16,6 @@ const AppRoutes: React.FC = () => (
       headerShown: false,
       cardStyle: { backgroundColor: '#312e38' },
     }}
-
   >
     {/** comentário JSX
      * Fluxo

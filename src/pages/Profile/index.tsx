@@ -3,10 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 const Profile: React.FC = () => {
-
-  return (
-    <View />
-  );
+  return <View />;
 };
 
 export default Profile;
