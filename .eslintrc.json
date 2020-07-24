@@ -24,8 +24,8 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint",
         "react-hooks",
+        "@typescript-eslint",
         "prettier"
     ],
     "rules": {
@@ -53,5 +53,5 @@
       "import/resolver": {
         "typescript": {}
       }
-    }
+  }
 }
