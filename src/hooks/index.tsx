@@ -5,4 +5,4 @@ const AppProvider: React.FC = ({ children }) => (
   <AuthProvider>{children}</AuthProvider>
 );
 
-export default AppProvider;
+export default AppProvider

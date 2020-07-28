@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../hooks/auth';
-import api from '../../services/api';
+import api from '../../services/api'
 import {
   Container,
   Header,
@@ -18,7 +18,7 @@ import {
   ProviderInfo,
   ProviderMeta,
   ProviderMetaText,
-} from './styles';
+} from './styles'
 
 export interface Provider {
   id: string;
