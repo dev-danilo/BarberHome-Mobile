@@ -1,5 +1,10 @@
 import React, {
-  useEffect, useRef, useImperativeHandle, forwardRef, useState, useCallback,
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  useState,
+  useCallback,
 } from 'react';
 import { TextInputProps } from 'react-native';
 import { useField } from '@unform/core';
@@ -8,6 +13,7 @@ import { Container, TextInput, Icon } from './styles';
 interface InputProps extends TextInputProps {
   name: string;
   icon: string;
+  containerStyle?: {};
 }
 
 interface InputValueReference {
@@ -19,14 +25,13 @@ interface InputRef {
 }
 
 const Input: React.RefForwardingComponent<InputRef, InputProps> = (
-  { name, icon, ...rest }, ref,
+  { name, icon, containerStyle = {}, ...rest },
+  ref,
   /** acessar informação do componente filho pelo componente pai */
 ) => {
   const inputElementRef = useRef<any>(null);
 
-  const {
-    registerField, defaultValue = '', error, fieldName,
-  } = useField(name);
+  const { registerField, defaultValue = '', error, fieldName } = useField(name);
 
   const inputValueRef = useRef<InputValueReference>({ value: defaultValue });
 
@@ -68,8 +73,12 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   }, [fieldName, registerField]);
 
   return (
-    <Container isFocused={isFocused} isErrored={!!error}>
-      <Icon name={icon} size={20} color={isFocused || isFilled ? '#FF9000' : '#666360'} />
+    <Container style={containerStyle} isFocused={isFocused} isErrored={!!error}>
+      <Icon
+        name={icon}
+        size={20}
+        color={isFocused || isFilled ? '#FF9000' : '#666360'}
+      />
       <TextInput
         ref={inputElementRef}
         keyboardAppearance="dark" /** formato teclado IOS */
@@ -77,7 +86,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
         defaultValue={defaultValue}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
-        onChangeText={(value) => {
+        onChangeText={value => {
           inputValueRef.current.value = value;
         }}
         {...rest}
