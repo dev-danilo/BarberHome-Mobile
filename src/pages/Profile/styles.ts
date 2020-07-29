@@ -31,3 +31,17 @@ export const UserAvatar = styled.Image`
 
   align-self: center;
 `;
+
+export const ButtonLogout = styled.TouchableOpacity`
+  background: #ff0000;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 18px;
+`;
+
+export const ButtonText = styled.Text`
+  align-self: center;
+  font-family: 'RobotoSlab-Medium';
+  color: #312e38;
+  font-size: 18px;
+`;
