@@ -18,7 +18,7 @@ import { FormHandles } from '@unform/core';
 import api from '../../services/api';
 
 import getValidationsErrors from '../../utils/getValidationErrors';
-import logoImg from '../../assets/logo.png';
+import logoImg from '../../assets/barberHome.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { Container, Title, BackToSignIn, BackToSignInText } from './styles';
