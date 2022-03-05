@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import _map from 'lodash/map';
+import _replace from 'lodash/replace';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import { Platform, Alert } from 'react-native';
@@ -66,6 +67,9 @@ const CreateAppointment: React.FC = () => {
 
   useEffect(() => {
     api.get('/providers').then(response => {
+      _map(response.data, User => {
+        User.avatar_url = _replace(User.avatar_url, 'localhost', '10.0.2.2');
+      });
       setProviders(response.data);
     });
   }, []);

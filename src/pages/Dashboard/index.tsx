@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import _map from 'lodash/map';
+import _get from 'lodash/get';
+import _replace from 'lodash/replace';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import {
@@ -35,6 +38,10 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     api.get('/providers').then(response => {
+      _map(response.data, User => {
+        const image = _replace(User.avatar_url, 'localhost', '10.0.2.2');
+        User.avatar_url = image;
+      });
       setProviders(response.data);
     });
   }, []);

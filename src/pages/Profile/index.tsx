@@ -37,9 +37,10 @@ interface ProfileFormData {
   password_confirmation: string;
 }
 
+const image = 'https://i.pravatar.cc/300';
+
 const Profile: React.FC = () => {
   const { user, updateUser, signOut } = useAuth();
-
   const formRef = useRef<FormHandles>(null);
 
   const navigation = useNavigation();
@@ -149,12 +150,15 @@ const Profile: React.FC = () => {
           name: `${user.id}.jpg`,
           uri: response.uri,
         });
-        api.patch('/users/avatar', data).then(apiResponse => {
-          updateUser(apiResponse.data);
-        });
+        api
+          .patch('users/avatar', data)
+          .then(apiResponse => {
+            updateUser(apiResponse.data);
+          })
+          .catch(console.log(data));
       },
     );
-  }, [updateUser, user.id]);
+  }, [updateUser, user.id, user.avatar_url]);
 
   const handleGoBack = useCallback(() => {
     navigation.goBack();
@@ -180,7 +184,7 @@ const Profile: React.FC = () => {
               <Icon name="chevron-left" size={24} color="#999591" />
             </BackButton>
             <UserAvatarButton onPress={handleUpdateAvatar}>
-              <UserAvatar source={{ uri: user.avatar_url }} />
+              <UserAvatar source={{ uri: user.avatar_url || image }} />
             </UserAvatarButton>
 
             <View>

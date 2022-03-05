@@ -39,6 +39,7 @@
       "@typescript-eslint/ban-types": "off",
       "camelcase": "off",
       "import/no-duplicates": "off",
+      "no-param-reassign": "off",
       "react/jsx-props-no-spreading": "off",
       "import/extensions": [
         "error",

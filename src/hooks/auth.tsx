@@ -6,6 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import _replace from 'lodash/replace';
 import api from '../services/api';
 
 interface User {
@@ -47,9 +48,14 @@ const AuthProvider: React.FC = ({ children }) => {
       ]);
 
       if (token[1] && user[1]) {
+        const userData = JSON.parse(user[1]);
+        if (__DEV__) {
+          const image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
+          userData.avatar_url = image;
+        }
         api.defaults.headers.authorization = `Bearer ${token[1]}`; // SignIn
 
-        setData({ token: token[1], user: JSON.parse(user[1]) });
+        setData({ token: token[1], user: userData });
       }
 
       setLoading(false);
@@ -67,15 +73,18 @@ const AuthProvider: React.FC = ({ children }) => {
     );
 
     const { token, user } = response.data;
-    // console.log(response.data);
     await AsyncStorage.multiSet([
       ['@Gobarber:token', token],
       ['@Gobarber:user', JSON.stringify(user)],
     ]);
 
     api.defaults.headers.authorization = `Bearer ${token}`; // SignIn
-
-    setData({ token, user }); // apos login chama setData
+    const userData = JSON.parse(JSON.stringify(user));
+    if (__DEV__) {
+      const image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
+      userData.avatar_url = image;
+    }
+    setData({ token, user: userData }); // apos login chama setData
   }, []);
 
   const signOut = useCallback(async () => {
@@ -87,9 +96,14 @@ const AuthProvider: React.FC = ({ children }) => {
   const updateUser = useCallback(
     async (user: User) => {
       await AsyncStorage.setItem('@Gobarber:user', JSON.stringify(user));
+      const userData = JSON.parse(JSON.stringify(user));
+      if (__DEV__) {
+        const image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
+        userData.avatar_url = image;
+      }
       setData({
         token: data.token,
-        user,
+        user: userData,
       });
     },
     [setData, data.token],
