@@ -34,6 +34,7 @@ import {
   CreateAppointmentButton,
   CreateAppointmentButtonText,
 } from './styles';
+import { ProfileButton } from '../Dashboard/styles';
 
 interface RouteParams {
   providerId: string;
@@ -113,6 +114,10 @@ const CreateAppointment: React.FC = () => {
     [],
   );
 
+  const navigateToProfile = useCallback(() => {
+    navigate('Profile');
+  }, [navigate]);
+
   const handleSelectHour = useCallback((hour: number) => {
     setSelectedHour(hour);
   }, []);
@@ -167,8 +172,9 @@ const CreateAppointment: React.FC = () => {
           <Icon name="chevron-left" size={24} color="#999591" />
         </BackButton>
         <HeaderTitle>Cabeleireiros</HeaderTitle>
-
-        <UserAvatar source={{ uri: user.avatar_url }} />
+        <ProfileButton onPress={navigateToProfile}>
+          <UserAvatar source={{ uri: user.avatar_url }} />
+        </ProfileButton>
       </Header>
       <Content>
         <ProvidersListContainer>
