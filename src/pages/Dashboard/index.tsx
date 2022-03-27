@@ -1,25 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import _map from 'lodash/map';
 import _replace from 'lodash/replace';
+import React, { useCallback, useEffect, useState } from 'react';
+import Icon from 'react-native-vector-icons/Feather';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import {
   Container,
   Header,
-  HeaderTitle,
-  UserName,
-  ProfileButton,
-  UserAvatar,
-  ProvidersList,
-  ProvidersListTitle,
-  ProviderContainer,
-  ProviderAvatar,
-  ProviderName,
-  ProviderInfo,
+  HeaderTitle, ProfileButton, ProviderAvatar, ProviderContainer, ProviderInfo,
   ProviderMeta,
-  ProviderMetaText,
+  ProviderMetaText, ProviderName, ProvidersList,
+  ProvidersListTitle, UserAvatar, UserName
 } from './styles';
 
 export interface Provider {
@@ -27,7 +19,7 @@ export interface Provider {
   name: string;
   avatar_url: string;
 }
-
+const image = 'https://i.pravatar.cc/300';
 const Dashboard: React.FC = () => {
   const [providers, setProviders] = useState<Provider[]>([]);
 
@@ -65,7 +57,7 @@ const Dashboard: React.FC = () => {
           <UserName>{user.name}</UserName>
         </HeaderTitle>
         <ProfileButton onPress={navigateToProfile}>
-          <UserAvatar source={{ uri: user.avatar_url }} />
+          <UserAvatar source={{ uri: user.avatar_url || image }} />
         </ProfileButton>
       </Header>
       <ProvidersList

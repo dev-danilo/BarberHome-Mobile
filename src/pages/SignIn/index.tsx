@@ -1,31 +1,30 @@
+import { useNavigation } from '@react-navigation/native';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/mobile';
 import React, { useCallback, useRef } from 'react';
 import {
+  Alert,
   Image,
-  View,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   TextInput,
-  Alert,
+  View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';
-import { Form } from '@unform/mobile';
-import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { useAuth } from '../../hooks/auth';
-
-import getValidationsErrors from '../../utils/getValidationErrors';
 import logoImg from '../../assets/barberHome.png';
-import Input from '../../components/Input';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
+import { useAuth } from '../../hooks/auth';
+import getValidationsErrors from '../../utils/getValidationErrors';
 import {
   Container,
-  Title,
-  ForgotPassword,
-  ForgotPasswordText,
   CreateAccountButton,
   CreateAccountButtonText,
+  ForgotPassword,
+  ForgotPasswordText,
+  Title
 } from './styles';
 
 interface SignInFormData {
@@ -91,6 +90,9 @@ const SignIn: React.FC = () => {
           contentContainerStyle={{ flex: 1 }}
         >
           <Container>
+            <CreateAccountButtonText style={{ marginVertical: 30 }}>
+              Defesa TCC Danilo Pereira
+            </CreateAccountButtonText>
             <Image source={logoImg} />
             <View>
               <Title>Faça seu login</Title>
