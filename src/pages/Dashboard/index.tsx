@@ -8,10 +8,18 @@ import api from '../../services/api';
 import {
   Container,
   Header,
-  HeaderTitle, ProfileButton, ProviderAvatar, ProviderContainer, ProviderInfo,
+  HeaderTitle,
+  ProfileButton,
+  ProviderAvatar,
+  ProviderContainer,
+  ProviderInfo,
   ProviderMeta,
-  ProviderMetaText, ProviderName, ProvidersList,
-  ProvidersListTitle, UserAvatar, UserName
+  ProviderMetaText,
+  ProviderName,
+  ProvidersList,
+  ProvidersListTitle,
+  UserAvatar,
+  UserName
 } from './styles';
 
 export interface Provider {

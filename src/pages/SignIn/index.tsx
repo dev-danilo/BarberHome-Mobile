@@ -6,9 +6,11 @@ import {
   Alert,
   Image,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   ScrollView,
   TextInput,
+  TouchableOpacity,
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -90,9 +92,15 @@ const SignIn: React.FC = () => {
           contentContainerStyle={{ flex: 1 }}
         >
           <Container>
-            <CreateAccountButtonText style={{ marginVertical: 30 }}>
-              Defesa TCC Danilo Pereira
-            </CreateAccountButtonText>
+            <TouchableOpacity
+              onPress={() => Linking.openURL('http://danilopereira.tech')}
+            >
+              <CreateAccountButtonText
+                style={{ marginVertical: 30, textDecorationLine: 'underline' }}
+              >
+                Defesa TCC Danilo Pereira
+              </CreateAccountButtonText>
+            </TouchableOpacity>
             <Image source={logoImg} />
             <View>
               <Title>Faça seu login</Title>
