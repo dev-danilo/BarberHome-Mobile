@@ -1,12 +1,10 @@
-import React, {
-  createContext,
-  useCallback,
-  useState,
-  useContext,
-  useEffect,
-} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import _replace from 'lodash/replace';
+import React, {
+  createContext,
+  useCallback, useContext,
+  useEffect, useState
+} from 'react';
 import api from '../services/api';
 
 interface User {
@@ -43,8 +41,8 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     async function loadStorageData(): Promise<void> {
       const [token, user] = await AsyncStorage.multiGet([
-        '@Gobarber:token',
-        '@Gobarber:user',
+        '@BarberHome:token',
+        '@BarberHome:user',
       ]);
 
       if (token[1] && user[1]) {
@@ -74,8 +72,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
     const { token, user } = response.data;
     await AsyncStorage.multiSet([
-      ['@Gobarber:token', token],
-      ['@Gobarber:user', JSON.stringify(user)],
+      ['@BarberHome:token', token],
+      ['@BarberHome:user', JSON.stringify(user)],
     ]);
 
     api.defaults.headers.authorization = `Bearer ${token}`; // SignIn
@@ -88,14 +86,14 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove(['@Gobarber:token', '@Gobarber:user']);
+    await AsyncStorage.multiRemove(['@BarberHome:token', '@BarberHome:user']);
 
     setData({} as AuthState); // deslogando usuario
   }, []);
 
   const updateUser = useCallback(
     async (user: User) => {
-      await AsyncStorage.setItem('@Gobarber:user', JSON.stringify(user));
+      await AsyncStorage.setItem('@BarberHome:user', JSON.stringify(user));
       const userData = JSON.parse(JSON.stringify(user));
       if (__DEV__) {
         const image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');

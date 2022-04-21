@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import _isEmpty from 'lodash/isEmpty';
 import _map from 'lodash/map';
 import _replace from 'lodash/replace';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -27,7 +28,8 @@ export interface Provider {
   name: string;
   avatar_url: string;
 }
-const image = 'https://i.pravatar.cc/300';
+const imageProfileNullUser = 'https://i.pravatar.cc/300?img=2';
+const imageProfileNullProvider = 'https://i.pravatar.cc/350';
 const Dashboard: React.FC = () => {
   const [providers, setProviders] = useState<Provider[]>([]);
 
@@ -36,11 +38,17 @@ const Dashboard: React.FC = () => {
   const { navigate } = useNavigation();
 
   useEffect(() => {
+    let count = 10;
     api.get('/providers').then(response => {
       _map(response.data, User => {
+        if (_isEmpty(response.data.avatar_url)) {
+          response.data.avatar_url = `https://i.pravatar.cc/300?img=${count}`;
+          count++;
+        }
         const image = _replace(User.avatar_url, 'localhost', '10.0.2.2');
         User.avatar_url = image;
       });
+
       setProviders(response.data);
     });
   }, []);
@@ -65,7 +73,9 @@ const Dashboard: React.FC = () => {
           <UserName>{user.name}</UserName>
         </HeaderTitle>
         <ProfileButton onPress={navigateToProfile}>
-          <UserAvatar source={{ uri: user.avatar_url || image }} />
+          <UserAvatar
+            source={{ uri: user.avatar_url || imageProfileNullUser }}
+          />
         </ProfileButton>
       </Header>
       <ProvidersList
@@ -78,8 +88,9 @@ const Dashboard: React.FC = () => {
           <ProviderContainer
             onPress={() => navigateToCreateAppointment(provider.id)}
           >
-            <ProviderAvatar source={{ uri: provider.avatar_url }} />
-
+            <ProviderAvatar
+              source={{ uri: provider.avatar_url || imageProfileNullProvider }}
+            />
             <ProviderInfo>
               <ProviderName>{provider.name}</ProviderName>
 

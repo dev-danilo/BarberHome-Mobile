@@ -1,33 +1,32 @@
-import React, { useRef, useCallback } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/mobile';
+import React, { useCallback, useRef } from 'react';
 import {
-  View,
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   TextInput,
-  Alert,
+  View
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import * as Yup from 'yup';
-import Icon from 'react-native-vector-icons/Feather';
-import { Form } from '@unform/mobile';
-import { FormHandles } from '@unform/core';
 import ImagePicker from 'react-native-image-picker';
-import api from '../../services/api';
-
-import getValidationsErrors from '../../utils/getValidationErrors';
-import Input from '../../components/Input';
+import Icon from 'react-native-vector-icons/Feather';
+import * as Yup from 'yup';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
+import { useAuth } from '../../hooks/auth';
+import api from '../../services/api';
+import getValidationsErrors from '../../utils/getValidationErrors';
 import {
-  Container,
-  Title,
   BackButton,
-  UserAvatarButton,
-  UserAvatar,
   ButtonLogout,
   ButtonText,
+  Container,
+  Title,
+  UserAvatar,
+  UserAvatarButton
 } from './styles';
-import { useAuth } from '../../hooks/auth';
 
 interface ProfileFormData {
   name: string;
@@ -37,7 +36,7 @@ interface ProfileFormData {
   password_confirmation: string;
 }
 
-const image = 'https://i.pravatar.cc/300';
+const image = 'https://i.pravatar.cc/300?img=2';
 
 const Profile: React.FC = () => {
   const { user, updateUser, signOut } = useAuth();

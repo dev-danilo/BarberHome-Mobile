@@ -1,27 +1,24 @@
-import React, { useRef, useCallback } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/mobile';
+import React, { useCallback, useRef } from 'react';
 import {
+  Alert,
   Image,
-  View,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   TextInput,
-  Alert,
+  View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
-
-import { Form } from '@unform/mobile';
-import { FormHandles } from '@unform/core';
-
-import api from '../../services/api';
-
-import getValidationsErrors from '../../utils/getValidationErrors';
 import logoImg from '../../assets/barberHome.png';
-import Input from '../../components/Input';
 import Button from '../../components/Button';
-import { Container, Title, BackToSignIn, BackToSignInText } from './styles';
+import Input from '../../components/Input';
+import api from '../../services/api';
+import getValidationsErrors from '../../utils/getValidationErrors';
+import { BackToSignIn, BackToSignInText, Container, Title } from './styles';
 
 interface SignUpFormData {
   name: string;
@@ -56,7 +53,7 @@ const SignUp: React.FC = () => {
 
         Alert.alert(
           'Cadastro realizado com sucesso.',
-          'Você já pode fazer seu login no GoBarber! 🚀😆',
+          'Você já pode fazer seu login no BarberHome! 🚀😆',
         );
 
         navigation.goBack();
