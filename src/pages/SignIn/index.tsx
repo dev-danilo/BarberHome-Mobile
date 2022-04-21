@@ -94,13 +94,7 @@ const SignIn: React.FC = () => {
           <Container>
             <TouchableOpacity
               onPress={() => Linking.openURL('http://danilopereira.tech')}
-            >
-              <CreateAccountButtonText
-                style={{ marginVertical: 30, textDecorationLine: 'underline' }}
-              >
-                Defesa TCC Danilo Pereira
-              </CreateAccountButtonText>
-            </TouchableOpacity>
+            />
             <Image source={logoImg} />
             <View>
               <Title>Faça seu login</Title>
