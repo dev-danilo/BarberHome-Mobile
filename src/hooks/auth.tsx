@@ -2,9 +2,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import _replace from 'lodash/replace';
 import React, {
   createContext,
-  useCallback, useContext,
-  useEffect, useState
+  useCallback,
+  useContext,
+  useEffect,
+  useState
 } from 'react';
+import Config from 'react-native-config';
 import api from '../services/api';
 
 interface User {
@@ -47,8 +50,13 @@ const AuthProvider: React.FC = ({ children }) => {
 
       if (token[1] && user[1]) {
         const userData = JSON.parse(user[1]);
+        let image = _replace(
+          userData.avatar_url,
+          'http://localhost:3333',
+          Config.API_URL,
+        );
         if (__DEV__) {
-          const image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
+          image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
           userData.avatar_url = image;
         }
         api.defaults.headers.authorization = `Bearer ${token[1]}`; // SignIn
@@ -78,8 +86,13 @@ const AuthProvider: React.FC = ({ children }) => {
 
     api.defaults.headers.authorization = `Bearer ${token}`; // SignIn
     const userData = JSON.parse(JSON.stringify(user));
+    let image = _replace(
+      userData.avatar_url,
+      'http://localhost:3333',
+      Config.API_URL,
+    );
     if (__DEV__) {
-      const image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
+      image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
       userData.avatar_url = image;
     }
     setData({ token, user: userData }); // apos login chama setData
@@ -95,8 +108,13 @@ const AuthProvider: React.FC = ({ children }) => {
     async (user: User) => {
       await AsyncStorage.setItem('@BarberHome:user', JSON.stringify(user));
       const userData = JSON.parse(JSON.stringify(user));
+      let image = _replace(
+        userData.avatar_url,
+        'http://localhost:3333',
+        Config.API_URL,
+      );
       if (__DEV__) {
-        const image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
+        image = _replace(userData.avatar_url, 'localhost', '10.0.2.2');
         userData.avatar_url = image;
       }
       setData({

@@ -3,6 +3,7 @@ import _isEmpty from 'lodash/isEmpty';
 import _map from 'lodash/map';
 import _replace from 'lodash/replace';
 import React, { useCallback, useEffect, useState } from 'react';
+import Config from 'react-native-config';
 import Icon from 'react-native-vector-icons/Feather';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
@@ -45,7 +46,14 @@ const Dashboard: React.FC = () => {
           response.data.avatar_url = `https://i.pravatar.cc/300?img=${count}`;
           count++;
         }
-        const image = _replace(User.avatar_url, 'localhost', '10.0.2.2');
+        let image = _replace(
+          User.avatar_url,
+          'http://localhost:3333',
+          Config.API_URL,
+        );
+        if (__DEV__) {
+          image = _replace(User.avatar_url, 'localhost', '10.0.2.2');
+        }
         User.avatar_url = image;
       });
 
@@ -74,7 +82,14 @@ const Dashboard: React.FC = () => {
         </HeaderTitle>
         <ProfileButton onPress={navigateToProfile}>
           <UserAvatar
-            source={{ uri: user.avatar_url || imageProfileNullUser }}
+            source={{
+              uri:
+                _replace(
+                  user.avatar_url,
+                  'http://localhost:3333',
+                  Config.API_URL,
+                ) || imageProfileNullUser,
+            }}
           />
         </ProfileButton>
       </Header>
