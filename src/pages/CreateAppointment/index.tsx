@@ -1,40 +1,41 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { format } from 'date-fns';
 import _map from 'lodash/map';
 import _replace from 'lodash/replace';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { Alert, Platform } from 'react-native';
+import Config from 'react-native-config';
 import Icon from 'react-native-vector-icons/Feather';
-import { Platform, Alert } from 'react-native';
-import { format } from 'date-fns';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
+import { ProfileButton } from '../Dashboard/styles';
 import {
-  Container,
-  Header,
   BackButton,
-  HeaderTitle,
-  UserAvatar,
-  Content,
-  ProvidersListContainer,
-  ProvidersList,
-  ProviderContainer,
-  ProviderAvatar,
-  ProviderName,
   Calendar,
-  Title,
-  OpenDatePickerButton,
-  OpenDatePickerButtonText,
-  Schedule,
-  Section,
-  SectionTitle,
-  SectionContent,
-  Hour,
-  HourText,
+  Container,
+  Content,
   CreateAppointmentButton,
   CreateAppointmentButtonText,
+  Header,
+  HeaderTitle,
+  Hour,
+  HourText,
+  OpenDatePickerButton,
+  OpenDatePickerButtonText,
+  ProviderAvatar,
+  ProviderContainer,
+  ProviderName,
+  ProvidersList,
+  ProvidersListContainer,
+  Schedule,
+  Section,
+  SectionContent,
+  SectionTitle,
+  Title,
+  UserAvatar
 } from './styles';
-import { ProfileButton } from '../Dashboard/styles';
 
 interface RouteParams {
   providerId: string;
@@ -69,7 +70,11 @@ const CreateAppointment: React.FC = () => {
   useEffect(() => {
     api.get('/providers').then(response => {
       _map(response.data, User => {
-        User.avatar_url = _replace(User.avatar_url, 'localhost', '10.0.2.2');
+        User.avatar_url = _replace(
+          User.avatar_url,
+          'http://localhost:3333',
+          Config.API_URL,
+        );
       });
       setProviders(response.data);
     });

@@ -1,7 +1,8 @@
 import axios from 'axios';
+import Config from 'react-native-config';
 
 const api = axios.create({
-  baseURL: 'http://10.0.2.2:3333',
+  baseURL: Config.API_URL,
   // ? Android Studio */
   // * baseURL: 'http://192.168.0.115:3333',
   // ? USB  OBS: caso for Wi-fi, e deve colocar IP da maquina que esta desenvolvendo

@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
+import _replace from 'lodash/replace';
 import React, { useCallback, useRef } from 'react';
 import {
   Alert,
@@ -10,6 +11,7 @@ import {
   TextInput,
   View
 } from 'react-native';
+import Config from 'react-native-config';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import * as Yup from 'yup';
@@ -183,7 +185,16 @@ const Profile: React.FC = () => {
               <Icon name="chevron-left" size={24} color="#999591" />
             </BackButton>
             <UserAvatarButton onPress={handleUpdateAvatar}>
-              <UserAvatar source={{ uri: user.avatar_url || image }} />
+              <UserAvatar
+                source={{
+                  uri:
+                    _replace(
+                      user.avatar_url,
+                      'http://localhost:3333',
+                      Config.API_URL,
+                    ) || image,
+                }}
+              />
             </UserAvatarButton>
 
             <View>
