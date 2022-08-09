@@ -53,6 +53,7 @@ interface AvailabilityItem {
 }
 
 const CreateAppointment: React.FC = () => {
+  const imageProfileNullProvider = 'https://i.pravatar.cc/350';
   const { user } = useAuth();
   const route = useRoute();
   const { goBack, navigate } = useNavigation();
@@ -130,7 +131,7 @@ const CreateAppointment: React.FC = () => {
   const handleCreateAppointment = useCallback(async () => {
     try {
       const date = new Date(selectedDate);
-      date.setHours(selectedHour);
+      date.setHours(selectedHour - 3);
       date.setMinutes(0);
 
       await api.post('appointments', {
@@ -141,7 +142,7 @@ const CreateAppointment: React.FC = () => {
     } catch (err) {
       Alert.alert(
         'Erro ao criar agendamento',
-        'Ocorreu um erro ao tentar criar um agendamento, tente novamente',
+        'Horário já agendado ou fora do horário comercial.',
       );
     }
   }, [navigate, selectedDate, selectedHour, selectedProvider]);
@@ -178,7 +179,9 @@ const CreateAppointment: React.FC = () => {
         </BackButton>
         <HeaderTitle>Cabeleireiros</HeaderTitle>
         <ProfileButton onPress={navigateToProfile}>
-          <UserAvatar source={{ uri: user.avatar_url }} />
+          <UserAvatar
+            source={{ uri: user.avatar_url || imageProfileNullProvider }}
+          />
         </ProfileButton>
       </Header>
       <Content>

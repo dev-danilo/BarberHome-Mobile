@@ -38,10 +38,9 @@ interface ProfileFormData {
   password_confirmation: string;
 }
 
-const image = 'https://i.pravatar.cc/300?img=2';
-
 const Profile: React.FC = () => {
   const { user, updateUser, signOut } = useAuth();
+  const image = 'https://ui-avatars.com/api/?background=random';
   const formRef = useRef<FormHandles>(null);
 
   const navigation = useNavigation();

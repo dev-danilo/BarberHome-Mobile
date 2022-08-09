@@ -29,9 +29,9 @@ export interface Provider {
   name: string;
   avatar_url: string;
 }
-const imageProfileNullUser = 'https://i.pravatar.cc/300?img=2';
 const imageProfileNullProvider = 'https://i.pravatar.cc/350';
 const Dashboard: React.FC = () => {
+  const imageProfileNullUser = 'https://ui-avatars.com/api/?background=random';
   const [providers, setProviders] = useState<Provider[]>([]);
 
   const { user } = useAuth();
@@ -82,14 +82,7 @@ const Dashboard: React.FC = () => {
         </HeaderTitle>
         <ProfileButton onPress={navigateToProfile}>
           <UserAvatar
-            source={{
-              uri:
-                _replace(
-                  user.avatar_url,
-                  'http://localhost:3333',
-                  Config.API_URL,
-                ) || imageProfileNullUser,
-            }}
+            source={{ uri: user.avatar_url || imageProfileNullUser }}
           />
         </ProfileButton>
       </Header>
